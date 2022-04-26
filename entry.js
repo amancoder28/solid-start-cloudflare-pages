@@ -6,13 +6,6 @@ import entryServer from "./app";
 prepareManifest(manifest, assetManifest);
 
 export const onRequestGet = ({ request, next }) => {
-  // const url = new URL(request.url);
-  // const pathname = url.pathname;
-
-  // if (pathname.match(`\/assets\/[^\/]+(\/)?$`)) {
-  //   return next();
-  // }
-
   if (/\.\w+$/.test(request.url)) {
     return next(request);
   }
