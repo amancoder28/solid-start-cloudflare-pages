@@ -6,8 +6,11 @@ import entry from "./app";
 prepareManifest(manifest, assetManifest);
 
 export const onRequestGet = ({ request, next }) => {
+  const url = new URL(request.url);
+  const pathname = url.pathname;
+
   // Handle static assets
-  if (/\.\w+$/.test(request.url)) {
+  if (!pathname.match(`\/_m\/[^\/]+(\/)?$`) && /\.\w+$/.test(request.url)) {
     return next(request);
   }
 
