@@ -1,18 +1,19 @@
 import manifest from "../../dist/rmanifest.json";
 import assetManifest from "../../dist/manifest.json";
 import prepareManifest from "solid-start/runtime/prepareManifest";
-import entryServer from "./app";
+import entry from "./app";
 
 prepareManifest(manifest, assetManifest);
 
 export const onRequestGet = ({ request, next }) => {
+  // Handle static assets
   if (/\.\w+$/.test(request.url)) {
     return next(request);
   }
 
-  return entryServer({
+  return entry({
     request,
     responseHeaders: new Headers(),
-    manifest,
+    manifest
   });
 };
