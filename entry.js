@@ -6,17 +6,23 @@ import entry from "./app";
 prepareManifest(manifest, assetManifest);
 
 export const onRequestGet = ({ request, next }) => {
-  const url = new URL(request.url);
-  const pathname = url.pathname;
-
   // Handle static assets
-  if (!pathname.match(`\/_m\/[^\/]+(\/)?$`) && /\.\w+$/.test(request.url)) {
+  if (/\.\w+$/.test(request.url)) {
     return next(request);
   }
 
   return entry({
     request,
     responseHeaders: new Headers(),
-    manifest
+    manifest,
   });
 };
+
+export async function onRequestPost({ request }) {
+  // Allow for POST /_m/33fbce88a9 server function
+  return entry({
+    request,
+    responseHeaders: new Headers(),
+    manifest,
+  });
+}
