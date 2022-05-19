@@ -1,6 +1,7 @@
 import manifest from "../../dist/rmanifest.json";
 import assetManifest from "../../dist/manifest.json";
 import prepareManifest from "solid-start/runtime/prepareManifest";
+//@ts-ignore
 import entry from "./app";
 
 prepareManifest(manifest, assetManifest);
@@ -33,12 +34,12 @@ export const onRequestGet = async ({ request, next, waitUntil }) => {
   });
 
   if (useCache) {
+    // waitUntil the Cache is set
     waitUntil(cache.put(request, response));
-
-    // console.log(cache, response);
   }
 
   // Return Solid SSR response
+  // I don't know why, but the response can't be returned if there is waitUntil above it
   return response;
 };
 
