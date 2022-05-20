@@ -38,7 +38,7 @@ export const onRequestGet = async ({ request, next, waitUntil }) => {
 
   // Return Solid SSR response
   // I don't know why, but the response can't be returned if there is waitUntil above it
-  // Note that the Caching Works, but the Cache is set, the response will be Empty
+  // Note that the Caching Works, but after the Cache is set, the response will be Empty
   return response;
 };
 
