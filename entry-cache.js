@@ -1,7 +1,6 @@
 import manifest from "../../dist/rmanifest.json";
 import assetManifest from "../../dist/manifest.json";
 import prepareManifest from "solid-start/runtime/prepareManifest";
-//@ts-ignore
 import entry from "./app";
 
 prepareManifest(manifest, assetManifest);
@@ -13,12 +12,11 @@ export const onRequestGet = async ({ request, next, waitUntil }) => {
   }
 
   const url = new URL(request.url);
-
   const useCache = url.hostname !== "localhost";
 
-  // Early return from cache
   const cache = await caches.open("custom:solid");
 
+  // Early return from cache
   if (useCache) {
     const cachedResponse = await cache.match(request);
 
@@ -40,6 +38,7 @@ export const onRequestGet = async ({ request, next, waitUntil }) => {
 
   // Return Solid SSR response
   // I don't know why, but the response can't be returned if there is waitUntil above it
+  // Note that the Caching Works, but the Cache is set, the response will be Empty
   return response;
 };
 
